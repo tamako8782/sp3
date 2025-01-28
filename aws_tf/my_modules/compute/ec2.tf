@@ -41,9 +41,9 @@ resource "aws_launch_template" "web_launch_template" {
     yum install -y git nginx
     systemctl enable nginx
     systemctl start nginx
-    git clone https://github.com/tamako8782/sp2.git
+    git clone https://github.com/tamako8782/sp3.git
     rm -rf /usr/share/nginx/html/*
-    mv sp2/web/src/* /usr/share/nginx/html/
+    mv sp3/web/src/* /usr/share/nginx/html/
     cd /usr/share/nginx/html/
     sed -i 's|const apiIp = "APIIPADDRESS"|const apiIp = "${aws_lb.api_nlb.dns_name}"|' /usr/share/nginx/html/index.js
     systemctl restart nginx
@@ -88,8 +88,8 @@ resource "aws_launch_template" "api_launch_template" {
     yum install -y mysql
     systemctl start mysqld
     systemctl enable mysqld
-    git clone https://github.com/tamako8782/sp2.git
-    cat <<EOT >> /sp2/api/.env
+    git clone https://github.com/tamako8782/sp3.git
+    cat <<EOT >> /sp3/api/.env
     DB_USER=${var.db_username}
     DB_PASS=${var.db_password}
     DB_HOST=${var.db_address}
@@ -97,7 +97,7 @@ resource "aws_launch_template" "api_launch_template" {
     DB_NAME=${var.db_name}
     EOT
     
-     ./sp2/api/api_for_linux_amd2 
+     ./sp3/api/api_for_linux_amd3 
   EOF
   )
 }
